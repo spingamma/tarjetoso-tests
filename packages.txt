@@ -1,0 +1,11 @@
+pytest
+allure-pytest
+pytest-bdd
+pytest-playwright
+pytest-xdist
+locust
+greenlet==3.3.0
+python-dotenv
+requests
+sqlalchemy
+psycopg2-binary

@@ -1,0 +1,28 @@
+services:
+  master:
+    build: .
+    user: "${UID_GID}"
+    ports:
+      - "8089:8089"
+      - "5557:5557"
+    volumes:
+      - ./:/mnt/locust
+    environment:
+      - LOCUST_EXPECT_WORKERS=${WORKERS:-1}
+      - LOCUST_HOST=${LOCUST_HOST:-http://example.com}
+    command: >
+      -f /mnt/locust/tests/performance/locustfile.py
+      --master
+      --headless
+      --html /mnt/locust/locust-report.html
+      --csv /mnt/locust/locust-results
+
+  worker:
+    build: .
+    user: "${UID_GID}"
+    volumes:
+      - ./:/mnt/locust
+    command: >
+      -f /mnt/locust/tests/performance/locustfile.py
+      --worker
+      --master-host ${MASTER_HOST:-master}

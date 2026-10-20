@@ -1,0 +1,21 @@
+{
+  "name": "automation",
+  "version": "1.0.0",
+  "description": "It's a test automation framework unified",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Jhonatanfc94/"
+  },
+  "author": "Jhonatan Flores Cardenas",
+  "license": "ISC",
+  "dependencies": {
+    "lighthouse": "^12.8.2"
+  }
+}
