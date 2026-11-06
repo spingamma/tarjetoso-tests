@@ -72,6 +72,23 @@ class DeliveryDashboardPage(BasePage):
     def get_blocked_button(self, order_id: str):
         return self.page.locator(f"[data-testid='blocked-delivery-btn-{order_id}']")
 
+    def get_paused_button(self, order_id: str):
+        return self.page.locator(f"[data-testid='paused-shift-btn-{order_id}']")
+
+    def pause_work_mode(self):
+        """Pausa el turno haciendo click en el botón de trabajo si está activo."""
+        turn_active = self.page.locator("text=Turno: ACTIVO")
+        if turn_active.is_visible():
+            self.work_mode_toggle.click()
+            expect(self.page.locator("text=Turno: EN PAUSA")).to_be_visible(timeout=5000)
+
+    def resume_work_mode(self):
+        """Reanuda el turno haciendo click en el botón Play."""
+        turn_paused = self.page.locator("text=Turno: EN PAUSA")
+        if turn_paused.is_visible():
+            self.work_mode_toggle.click()
+            expect(self.page.locator("text=Turno: ACTIVO")).to_be_visible(timeout=5000)
+
     def claim_order(self, order_id: str):
         btn = self.get_accept_button(order_id)
         expect(btn).to_be_visible()

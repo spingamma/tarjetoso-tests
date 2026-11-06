@@ -31,3 +31,12 @@ Feature: Multi-Business Delivery Dispatch Board and Live Tracking
     When the delivery agent switches to the completed deliveries subtab
     And filters the history by today date range
     Then the settlement summary card should display the total completed runs and accumulated earnings
+
+  Scenario: Paused work mode blocks order claiming and displays pause button
+    Given a delivery agent user logged into the application
+    And an available order located 2.0 km from the delivery agent
+    When the delivery agent navigates to the delivery dispatch board
+    And the delivery agent pauses the work mode shift
+    Then the close order card should display a disabled paused shift button
+    When the delivery agent resumes the work mode shift
+    Then the close order card should display a green badge and an active accept button

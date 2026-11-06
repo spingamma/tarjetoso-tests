@@ -26,6 +26,7 @@ class ProfilePage(BasePage):
         self.product_submit_btn = page.locator("[data-testid='product-modal-submit-btn']")
         self.toggle_open_btn = page.locator("[data-testid='business-toggle-open-btn']")
         self.hero_closed_badge = page.locator("[data-testid='hero-closed-badge']")
+        self.hero_delivery_badge = page.locator("[data-testid='hero-delivery-badge']")
         self.banner_img = page.locator("img[alt^='Foto de perfil de']")
         self.checkout_btn = page.locator("[data-testid='order-checkout-btn']")
         self.open_team_modal_btn = page.locator("[data-testid='open-team-modal-btn']")
@@ -163,6 +164,14 @@ class ProfilePage(BasePage):
     def verify_closed_sign_not_visible(self):
         """Verifica que el letrero 'Cerrado' no esté visible en el banner."""
         expect(self.hero_closed_badge).not_to_be_visible(timeout=5000)
+
+    def verify_delivery_badge_visible(self):
+        """Verifica que el badge 'Delivery' derivado de delivery_methods esté visible en el banner."""
+        expect(self.hero_delivery_badge).to_be_visible(timeout=5000)
+
+    def verify_delivery_badge_not_visible(self):
+        """Verifica que el badge 'Delivery' no esté visible en el banner."""
+        expect(self.hero_delivery_badge).not_to_be_visible(timeout=5000)
 
     def verify_grayscale_banner(self, has_grayscale: bool):
         """Verifica que la imagen del banner tenga o no la clase grayscale."""

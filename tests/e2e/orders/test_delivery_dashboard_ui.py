@@ -28,6 +28,10 @@ def test_atomic_order_claiming_and_delivery_modal_dismissal():
 def test_delivery_earnings_settlement_report_with_date_range_filtering():
     pass
 
+@scenario(FEATURE_FILE, 'Paused work mode blocks order claiming and displays pause button')
+def test_paused_work_mode_blocks_order_claiming():
+    pass
+
 @pytest.fixture
 def shared_data():
     return {}
@@ -390,3 +394,22 @@ def then_verify_settlement_summary(page: Page, shared_data):
     # Debe reflejar al menos 1 carrera y ganancias en Bs.
     expect(dashboard.summary_card.locator("text=/1 carrera|carreras/i")).to_be_visible()
     expect(dashboard.summary_card.locator("text=/Bs\\./i").first).to_be_visible()
+
+@when("the delivery agent pauses the work mode shift")
+def when_pauses_work_mode(page: Page):
+    dashboard = DeliveryDashboardPage(page)
+    dashboard.pause_work_mode()
+
+@then("the close order card should display a disabled paused shift button")
+def then_card_displays_paused_button(page: Page, shared_data):
+    dashboard = DeliveryDashboardPage(page)
+    order_id = shared_data["close_order_id"]
+    paused_btn = dashboard.get_paused_button(order_id)
+    expect(paused_btn).to_be_visible(timeout=5000)
+    expect(paused_btn).to_be_disabled()
+    expect(dashboard.get_accept_button(order_id)).not_to_be_visible()
+
+@when("the delivery agent resumes the work mode shift")
+def when_resumes_work_mode(page: Page):
+    dashboard = DeliveryDashboardPage(page)
+    dashboard.resume_work_mode()
